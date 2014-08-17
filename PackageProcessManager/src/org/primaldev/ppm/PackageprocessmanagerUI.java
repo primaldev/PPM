@@ -3,9 +3,11 @@ package org.primaldev.ppm;
 import javax.servlet.annotation.WebServlet;
 
 import org.primaldev.ppm.ui.login.LoginUI;
+import org.primaldev.ppm.ui.main.MainUI;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
@@ -17,8 +19,10 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 @Theme("packageprocessmanager")
 public class PackageprocessmanagerUI extends UI {
-
-	private LoginUI loginUI = new LoginUI();
+	Navigator navigator;
+	protected static final String MAINVIEW = "main";
+	
+	//private LoginUI loginUI = new LoginUI();
 	
 	@WebServlet(value = "/*", asyncSupported = true)
 	@VaadinServletConfiguration(productionMode = false, ui = PackageprocessmanagerUI.class)
@@ -27,12 +31,18 @@ public class PackageprocessmanagerUI extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
-		final VerticalLayout layout = new VerticalLayout();
-		layout.setMargin(true);
+		//final VerticalLayout layout = new VerticalLayout();
+		navigator = new Navigator(this, this);
+		//layout.setMargin(true);
 		
-		setContent(layout);
-		setSizeFull();
-		setContent(loginUI);
+		//setContent(layout);
+	//	setSizeFull();
+		//setContent(loginUI);
+		
+		
+		
+		navigator.addView("", new LoginUI(navigator)); //default fallback view required
+		navigator.addView(MAINVIEW, new MainUI());
 		
 		//LoginUI loginUI = new LoginUI();
 		//layout.addComponent(loginUI);
