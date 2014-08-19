@@ -48,13 +48,14 @@ public class PackageprocessmanagerUI extends UI {
 		//navigator = new Navigator(this, this);
 		//layout.setMargin(true);
 		
-		buildMainLayout();
-		addClicklisteners();
+		if (isUserloggedin()) {
+			setContent(new MainUI());
+		} else {
+			buildMainLayout();
+			addClicklisteners();
+			setContent(mainLayout);
+		}
 		
-		
-		
-		
-		setContent(mainLayout);
 	//	setSizeFull();
 		//setContent(loginUI);
 		
@@ -80,6 +81,27 @@ public class PackageprocessmanagerUI extends UI {
 		*/
 	}
 	
+	
+	private boolean isUserloggedin(){
+		try {
+			if (getSession().getAttribute("user") == null) {
+				
+					return false;	
+				
+			}else{
+					return true;
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			
+		}		
+		
+		
+		return false;
+	}
+	
+	
 	@SuppressWarnings("serial")
 	private void addClicklisteners() {
 		loginButton.addClickListener(new Button.ClickListener() {
@@ -89,7 +111,8 @@ public class PackageprocessmanagerUI extends UI {
 					//fireViewEvent(new UserLoggedInEvent(getView(), userName.getValue()));
 					getSession().setAttribute("user", userName.getValue());
 					showLoginGood();
-					setContent(new MainUI());			
+					setContent(new MainUI());	
+					
 				} else {
 					
 					clearForm();
