@@ -54,7 +54,8 @@ public class GroupManagementTab extends CustomComponent {
 		
 		// horizontalLayout_1
 		horizontalLayout_1 = buildHorizontalLayout_1();
-		mainLayout.addComponent(horizontalLayout_1, "top:0.0px;left:0.0px;");
+		mainLayout.addComponent(horizontalLayout_1,
+				"top:0.0px;right:6.0px;left:0.0px;");
 		
 		// groupListTable
 		groupListTable = new Table();
@@ -88,14 +89,14 @@ public class GroupManagementTab extends CustomComponent {
 		// common part: create layout
 		horizontalLayout_2 = new HorizontalLayout();
 		horizontalLayout_2.setImmediate(false);
-		horizontalLayout_2.setWidth("340px");
+		horizontalLayout_2.setWidth("400px");
 		horizontalLayout_2.setHeight("60px");
 		horizontalLayout_2.setMargin(false);
 		
 		// addGroup
 		addGroup = new Button();
 		addGroup.setCaption("Add Group");
-		addGroup.setImmediate(false);
+		addGroup.setImmediate(true);
 		addGroup.setWidth("-1px");
 		addGroup.setHeight("-1px");
 		horizontalLayout_2.addComponent(addGroup);
@@ -104,7 +105,7 @@ public class GroupManagementTab extends CustomComponent {
 		// editGroup
 		editGroup = new Button();
 		editGroup.setCaption("Edit Group");
-		editGroup.setImmediate(false);
+		editGroup.setImmediate(true);
 		editGroup.setWidth("-1px");
 		editGroup.setHeight("-1px");
 		horizontalLayout_2.addComponent(editGroup);
@@ -113,7 +114,7 @@ public class GroupManagementTab extends CustomComponent {
 		// removeGroup
 		removeGroup = new Button();
 		removeGroup.setCaption("Remove Group");
-		removeGroup.setImmediate(false);
+		removeGroup.setImmediate(true);
 		removeGroup.setWidth("-1px");
 		removeGroup.setHeight("-1px");
 		horizontalLayout_2.addComponent(removeGroup);

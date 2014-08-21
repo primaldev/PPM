@@ -4,6 +4,8 @@ import javax.servlet.annotation.WebServlet;
 
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.ProcessEngines;
+import org.primaldev.ppm.event.SwitchView_Event;
+import org.primaldev.ppm.event.SwitchView_Listener;
 import org.primaldev.ppm.ui.main.MainUI;
 
 import com.github.wolfie.blackboard.Blackboard;
@@ -39,8 +41,10 @@ public class PackageprocessmanagerUI extends UI  {
 	private TextField userName;
 	
 	//event bus
-		private transient Blackboard blackboard = new Blackboard();
+	private transient Blackboard blackboard = new Blackboard();
 
+	//  private static ThreadLocal<Blackboard> BLACKBOARD = new ThreadLocal<Blackboard>();
+	 // private final Blackboard blackboardInstance = new Blackboard();
 	
 	
 	@WebServlet(value = "/*", asyncSupported = true)
@@ -51,12 +55,14 @@ public class PackageprocessmanagerUI extends UI  {
 
 	@Override	
 	protected void init(VaadinRequest request) {
+		//BLACKBOARD.set(blackboardInstance);
+		
 		
 		buildMainLayout();
 		addClicklisteners();
 		setContent(mainLayout);		 
 		
-		
+		blackboard.register(SwitchView_Listener.class, SwitchView_Event.class);
 	
 		
 		if (isUserloggedin()) {
@@ -82,13 +88,12 @@ public class PackageprocessmanagerUI extends UI  {
 	}
 	
 	private void setMainUI(){
-		mainUI = new MainUI();		
+		mainUI = new MainUI();
+		getBlackboard().addListener(mainUI);
 		setContent(mainUI);
 	}
 	
-	public void setMainUIToIndentManagement(){
-		mainUI.initIdentityTab();
-	}
+
 	
 	private boolean isUserloggedin(){
 		try {
@@ -110,10 +115,9 @@ public class PackageprocessmanagerUI extends UI  {
 	}
 	
   
-	public Blackboard getBlackboard() {
-		return blackboard;
+	public  Blackboard getBlackboard() {
+		    return blackboard;
 	}
-
 	
 	@SuppressWarnings("serial")
 	private void addClicklisteners() {

@@ -90,14 +90,14 @@ public class UserManagentTab extends CustomComponent {
 		// common part: create layout
 		horizontalLayout_2 = new HorizontalLayout();
 		horizontalLayout_2.setImmediate(false);
-		horizontalLayout_2.setWidth("400px");
+		horizontalLayout_2.setWidth("540px");
 		horizontalLayout_2.setHeight("60px");
 		horizontalLayout_2.setMargin(false);
 		
 		// addUser
 		addUser = new Button();
 		addUser.setCaption("Add User");
-		addUser.setImmediate(false);
+		addUser.setImmediate(true);
 		addUser.setWidth("-1px");
 		addUser.setHeight("-1px");
 		horizontalLayout_2.addComponent(addUser);
@@ -106,7 +106,7 @@ public class UserManagentTab extends CustomComponent {
 		// editUser
 		editUser = new Button();
 		editUser.setCaption("Edit User");
-		editUser.setImmediate(false);
+		editUser.setImmediate(true);
 		editUser.setWidth("-1px");
 		editUser.setHeight("-1px");
 		horizontalLayout_2.addComponent(editUser);
@@ -115,7 +115,7 @@ public class UserManagentTab extends CustomComponent {
 		// removeUser
 		removeUser = new Button();
 		removeUser.setCaption("Remove User");
-		removeUser.setImmediate(false);
+		removeUser.setImmediate(true);
 		removeUser.setWidth("-1px");
 		removeUser.setHeight("-1px");
 		horizontalLayout_2.addComponent(removeUser);
@@ -124,7 +124,7 @@ public class UserManagentTab extends CustomComponent {
 		// groupMemebers
 		groupMemebers = new Button();
 		groupMemebers.setCaption("Group Memebership");
-		groupMemebers.setImmediate(false);
+		groupMemebers.setImmediate(true);
 		groupMemebers.setWidth("-1px");
 		groupMemebers.setHeight("-1px");
 		horizontalLayout_2.addComponent(groupMemebers);
