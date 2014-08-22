@@ -37,17 +37,17 @@ public class IdentityManagementUI extends CustomComponent {
 		// common part: create layout
 		mainLayout = new AbsoluteLayout();
 		mainLayout.setImmediate(false);
-		mainLayout.setWidth("100%");
-		mainLayout.setHeight("100%");
+		mainLayout.setWidth("700px");
+		mainLayout.setHeight("600px");
 		
 		// top-level component properties
-		setWidth("100.0%");
-		setHeight("100.0%");
+		setWidth("700px");
+		setHeight("600px");
 		
 		// tabSheet_1
 		tabSheet_1 = buildTabSheet_1();
 		mainLayout.addComponent(tabSheet_1,
-				"top:0.0px;right:6.0px;bottom:0.0px;left:0.0px;");
+				"top:0.0px;right:0.0px;bottom:0.0px;left:0.0px;");
 		
 		return mainLayout;
 	}

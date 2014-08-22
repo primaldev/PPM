@@ -60,7 +60,7 @@ public class MainUI extends CustomComponent implements View, SwitchView_Listener
 
 	
 
-	
+	IdentityManagementUI IdentityManagementUI_1;
 
 
 	/*- VaadinEditorProperties={"grid":"RegularGrid,20","showGrid":true,"snapToGrid":true,"snapToObject":true,"movingGuides":false,"snappingDistance":10} */
@@ -179,23 +179,24 @@ public class MainUI extends CustomComponent implements View, SwitchView_Listener
 
 	
 	private void initIdentityTab(){
-		// userTaskList_1
-		IdentityManagementUI IdentityManagementUI_1 = new IdentityManagementUI();
+		// userTaskList_1	
+		mainTabSheet.removeComponent(IdentityManagementUI_1);
+		IdentityManagementUI_1 = new IdentityManagementUI();
 		IdentityManagementUI_1.setImmediate(false);
 		IdentityManagementUI_1.setWidth("100.0%");
 		IdentityManagementUI_1.setHeight("100.0%");
-		mainTabSheet.addTab(IdentityManagementUI_1, "Identity Management", null);
-		Notification.show("Hi User",
-	            "Doing your stuff here",
-	            Notification.Type.TRAY_NOTIFICATION);	
 		
+		
+			mainTabSheet.addTab(IdentityManagementUI_1, "Identity Management", null);
+			mainTabSheet.getTab(IdentityManagementUI_1).setClosable(true);
+			mainTabSheet.setSelectedTab(IdentityManagementUI_1);
+	
 	}
 	
 	@Override
 	public void onSwitchView(SwitchView_Event event) {
 		String viewName = event.getViewName();
-		if(viewName.equals(IdentityManagementUI.NAME)){
-			
+		if(viewName.equals(IdentityManagementUI.NAME)){			
 			initIdentityTab();
 		}
 		

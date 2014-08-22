@@ -45,17 +45,17 @@ public class GroupManagementTab extends CustomComponent {
 		// common part: create layout
 		mainLayout = new AbsoluteLayout();
 		mainLayout.setImmediate(false);
-		mainLayout.setWidth("100%");
-		mainLayout.setHeight("100%");
+		mainLayout.setWidth("680px");
+		mainLayout.setHeight("500px");
 		
 		// top-level component properties
-		setWidth("100.0%");
-		setHeight("100.0%");
+		setWidth("680px");
+		setHeight("500px");
 		
 		// horizontalLayout_1
 		horizontalLayout_1 = buildHorizontalLayout_1();
 		mainLayout.addComponent(horizontalLayout_1,
-				"top:0.0px;right:6.0px;left:0.0px;");
+				"top:0.0px;right:17.0px;left:0.0px;");
 		
 		// groupListTable
 		groupListTable = new Table();
@@ -63,7 +63,7 @@ public class GroupManagementTab extends CustomComponent {
 		groupListTable.setWidth("100.0%");
 		groupListTable.setHeight("100.0%");
 		mainLayout.addComponent(groupListTable,
-				"top:60.0px;right:-3.0px;bottom:0.0px;left:0.0px;");
+				"top:60.0px;right:0.0px;bottom:60.0px;left:0.0px;");
 		
 		return mainLayout;
 	}
