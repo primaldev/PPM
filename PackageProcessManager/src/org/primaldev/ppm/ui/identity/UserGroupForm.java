@@ -80,7 +80,8 @@ public class UserGroupForm extends CustomComponent {
 		
 		for (Group group: allGroups) {			
 			if (group.getName().equals(groupname)) {				
-				return group.getId();				
+				return group.getId();	
+				
 			}		
 		}		
 			return "";	

@@ -77,8 +77,7 @@ public class UserManagentTab extends CustomComponent {
 		BeanItemContainer<User> dataSource = new BeanItemContainer<User>(
 				User.class, allUsers);
 		userListTable.setContainerDataSource(dataSource);
-		userListTable.setVisibleColumns(new String[] { "id", "firstName",
-				"lastName", "email" });
+		userListTable.setVisibleColumns(new String[] { "id", "firstName","lastName", "email" });
 		updateButtonStates();
 	}
 	
