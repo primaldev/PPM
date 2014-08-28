@@ -118,7 +118,7 @@ public class UserManagentTab extends CustomComponent {
 		if (selectedUser != null) {
 			
 			Window groupFormWindow = new Window("Group Select");
-			UserGroupForm userForm = new UserGroupForm(selectedUser.getId());
+			UserGroupForm userForm = new UserGroupForm(groupFormWindow, selectedUser.getId());
 			groupFormWindow.setContent(userForm);
 			groupFormWindow.setSizeUndefined();
 			UI.getCurrent().addWindow(groupFormWindow);
