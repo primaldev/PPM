@@ -3,9 +3,12 @@ package org.primaldev.ppm.ui.process;
 import java.util.List;
 
 import org.activiti.engine.FormService;
+import org.activiti.engine.IdentityService;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
+import org.activiti.engine.identity.User;
+import org.activiti.engine.identity.UserQuery;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
 
@@ -17,7 +20,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupView;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
@@ -51,30 +53,34 @@ public class ProcessListUI extends CustomComponent {
 	
 	private void initTable(){
 		
+		processListTable.setSelectable(true);
+		processListTable.setImmediate(true);
+		
 		dataSource = new BeanItemContainer<ProcessDefinition>(ProcessDefinition.class,getAllProcessDefinitions());
-		Notification.show("PP Form",
-                "fsize" + processListTable.size(),
-                Notification.Type.TRAY_NOTIFICATION);
-		processListTable.setContainerDataSource(dataSource);
-		processListTable.setVisibleColumns(new String[] { "name", "key", "version" });
-		//processListTable.setVisibleColumns(new String[] { "name", "key", "version","resourceName", "category" });
+		
+		processListTable.setContainerDataSource(dataSource);		
+		processListTable.setVisibleColumns(new String[] { "name", "key", "version","resourceName", "category" });
 		processListTable.setSizeFull();
 		
 
  
-		//setProcessDefinitions(getAllProcessDefinitions());
-		//processListTable.addGeneratedColumn("name", createNameColumnGenerator());	
+		setProcessDefinitions(getAllProcessDefinitions());
+		processListTable.addGeneratedColumn("name", createNameColumnGenerator());	
 				
 		
 	
 	}
 	
-	
+	private IdentityService getIdentityService() {
+		return ProcessEngines.getDefaultProcessEngine().getIdentityService();
+	}
+
 
 	public void setProcessDefinitions(List<ProcessDefinition> definitions) {
 		dataSource.removeAllItems();
 		dataSource.addAll(definitions);
 	}
+	
 	
 	@SuppressWarnings("serial")
 	private ColumnGenerator createNameColumnGenerator() {
@@ -150,19 +156,20 @@ public class ProcessListUI extends CustomComponent {
 		// common part: create layout
 		mainLayout = new AbsoluteLayout();
 		mainLayout.setImmediate(false);
-		mainLayout.setWidth("937px");
-		mainLayout.setHeight("300px");
+		mainLayout.setWidth("600px");
+		mainLayout.setHeight("500px");
 		
 		// top-level component properties
-		setWidth("937px");
-		setHeight("300px");
+		setWidth("600px");
+		setHeight("500px");
 		
 		// processListTable
 		processListTable = new Table();
 		processListTable.setImmediate(false);
 		processListTable.setWidth("100.0%");
 		processListTable.setHeight("100.0%");
-		mainLayout.addComponent(processListTable, "top:0.0px;left:0.0px;");
+		mainLayout.addComponent(processListTable,
+				"top:0.0px;right:20.0px;bottom:20.0px;left:0.0px;");
 		
 		return mainLayout;
 	}
