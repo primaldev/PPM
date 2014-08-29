@@ -9,6 +9,7 @@ import org.primaldev.ppm.PackageprocessmanagerUI;
 import org.primaldev.ppm.event.SwitchView_Event;
 import org.primaldev.ppm.event.SwitchView_Listener;
 import org.primaldev.ppm.ui.identity.IdentityManagementUI;
+import org.primaldev.ppm.ui.process.ProcessListUI;
 import org.primaldev.ppm.ui.task.UserTaskList;
 
 import com.github.wolfie.blackboard.Blackboard;
@@ -61,6 +62,7 @@ public class MainUI extends CustomComponent implements View, SwitchView_Listener
 	
 
 	IdentityManagementUI IdentityManagementUI_1;
+	ProcessListUI processListUI;
 
 
 	/*- VaadinEditorProperties={"grid":"RegularGrid,20","showGrid":true,"snapToGrid":true,"snapToObject":true,"movingGuides":false,"snappingDistance":10} */
@@ -193,11 +195,29 @@ public class MainUI extends CustomComponent implements View, SwitchView_Listener
 	
 	}
 	
+	
+	private void initProcessList(){
+		mainTabSheet.removeComponent(processListUI);
+		processListUI = new ProcessListUI();
+		processListUI.setImmediate(false);
+		processListUI.setWidth("100.0%");
+		processListUI.setHeight("100.0%");
+		
+		
+			mainTabSheet.addTab(processListUI, "Processes", null);
+			mainTabSheet.getTab(processListUI).setClosable(true);
+			mainTabSheet.setSelectedTab(processListUI);
+		
+	}
+	
 	@Override
 	public void onSwitchView(SwitchView_Event event) {
 		String viewName = event.getViewName();
 		if(viewName.equals(IdentityManagementUI.NAME)){			
 			initIdentityTab();
+		}		
+		if(viewName.equals(ProcessListUI.NAME)){			
+			initProcessList();
 		}
 		
 	}

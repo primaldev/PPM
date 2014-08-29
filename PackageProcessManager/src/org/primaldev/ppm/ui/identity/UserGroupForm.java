@@ -139,10 +139,10 @@ private void saveUserGroup(){
 }
 
 	
-private List<Group> getAllGroups() {
+	private List<Group> getAllGroups() {
 		GroupQuery query = getIdentityService().createGroupQuery();		
 		return query.orderByGroupId().asc().list();		
-}	
+	}	
 	
 	private HashSet<String> getUserGroupNames() {
 		GroupQuery query = getIdentityService().createGroupQuery();

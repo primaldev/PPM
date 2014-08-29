@@ -45,14 +45,22 @@ public class ProcessEngineServletContextListener implements
 
 	private void createGroupsIfNotPresent() {
 		if (!isGroupPresent("managers")) {
-			createGroup("managers", "Managers");
+			createGroup("managers", "Managers", "process");
 		}
 		if (!isGroupPresent("developers")) {
-			createGroup("developers", "Developers");
+			createGroup("developers", "Developers", "process" );
 		}
 		if (!isGroupPresent("reporters")) {
-			createGroup("reporters", "Reporters");
+			createGroup("reporters", "Reporters", "process");
 		}
+		if (!isGroupPresent("siteadmin")) {
+			createGroup("siteadmin", "SiteAdmin", "system");
+		}
+		if (!isGroupPresent("poweruser")) {
+			createGroup("poweruser", "PowerUser", "system");
+		}
+		
+		
 	}
 
 	private boolean isAdminUserPresent() {
@@ -75,6 +83,7 @@ public class ProcessEngineServletContextListener implements
 		getIdentityService().createMembership("admin", "managers");
 		getIdentityService().createMembership("admin", "developers");
 		getIdentityService().createMembership("admin", "reporters");
+		getIdentityService().createMembership("admin", "siteadmin");
 	}
 
 	private boolean isGroupPresent(String groupId) {
@@ -83,12 +92,13 @@ public class ProcessEngineServletContextListener implements
 		return query.count() > 0;
 	}
 
-	private void createGroup(String groupId, String groupName) {
+	private void createGroup(String groupId, String groupName, String groupType) {
 		log.log(Level.INFO,
 				"Creating a group with the id '{1}' and name '{2}'",
 				new Object[] { groupId, groupName });
 		Group group = getIdentityService().newGroup(groupId);
 		group.setName(groupName);
+		group.setType(groupType);
 		getIdentityService().saveGroup(group);
 	}
 
