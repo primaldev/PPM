@@ -4,6 +4,8 @@ import javax.servlet.annotation.WebServlet;
 
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.ProcessEngines;
+import org.primaldev.ppm.event.RefreshLabels_Event;
+import org.primaldev.ppm.event.RefreshLabels_Listener;
 import org.primaldev.ppm.event.SwitchView_Event;
 import org.primaldev.ppm.event.SwitchView_Listener;
 import org.primaldev.ppm.ui.main.MainUI;
@@ -64,6 +66,7 @@ public class PackageprocessmanagerUI extends UI  {
 		setContent(mainLayout);		 
 		
 		blackboard.register(SwitchView_Listener.class, SwitchView_Event.class);
+		blackboard.register(RefreshLabels_Listener.class, RefreshLabels_Event.class);
 	
 		
 		if (isUserloggedin()) {
