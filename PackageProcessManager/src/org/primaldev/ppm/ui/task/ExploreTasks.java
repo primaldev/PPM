@@ -63,19 +63,39 @@ public class ExploreTasks extends CustomComponent {
 	private void initTable(){
 		
 		dataSource = new BeanItemContainer<Task>(Task.class);
-		unAssignedTasksTable.setContainerDataSource(dataSource);
-		unAssignedTasksTable.setVisibleColumns(getVisibleColumns());
+		unAssignedTasksTable.setContainerDataSource(dataSource);		
 		unAssignedTasksTable.addGeneratedColumn("name", createNameColumnGenerator());
-		
+		unAssignedTasksTable.addGeneratedColumn("product", createProductNameColumnGenerator());
+		unAssignedTasksTable.setVisibleColumns(getVisibleColumns());
 	}
 	
 	
 	protected String[] getVisibleColumns() {
-		return new String[] { "id", "name", "description", "priority",
-				"dueDate", "createTime" };
+		return new String[] { "product", "id", "name", "description", "priority",
+				"dueDate", "createTime" ,"assignee"};
 	}
 
 	
+	
+	private ColumnGenerator createProductNameColumnGenerator() {
+		return new ColumnGenerator() {
+
+			@Override
+			public Component generateCell(Table source, Object itemId,
+					Object columnId) {
+				Task task = (Task) itemId;
+				Label label = createTextField(task);				
+				return label;
+			}
+			
+		};
+	}
+	
+	private Label createTextField(Task task){
+		return new Label(String.format(
+				"What is <b>%s</b>?", task.getName()));
+		
+	}
 	
 	@SuppressWarnings("serial")
 	private ColumnGenerator createNameColumnGenerator() {
@@ -90,11 +110,14 @@ public class ExploreTasks extends CustomComponent {
 			}
 		};
 	}
+	
+	
 
 	
 	public void setTasks(List<Task> tasks) {
 		dataSource.removeAllItems();
 		dataSource.addAll(tasks);
+		
 	}
 	
 	@SuppressWarnings("serial")	
@@ -155,7 +178,7 @@ public class ExploreTasks extends CustomComponent {
 	protected List<Task> queryForTasksToShow() {
 		String currentUser = ProcessUtil.getIdOfCurrentUser();
 		TaskQuery query = ProcessUtil.getTaskService().createTaskQuery();
-		query.taskCandidateOrAssigned("manager").orderByTaskPriority().desc().orderByDueDate().desc();
+		query.active().orderByTaskPriority().desc().orderByDueDate().desc();
 		return query.list();
 	}
 
