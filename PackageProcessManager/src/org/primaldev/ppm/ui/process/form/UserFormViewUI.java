@@ -2,6 +2,7 @@ package org.primaldev.ppm.ui.process.form;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.UUID;
 
 import org.activiti.engine.FormService;
 import org.activiti.engine.ProcessEngines;
@@ -82,7 +83,7 @@ public class UserFormViewUI extends CustomComponent {
 		
 		cancelButton.addClickListener( new Button.ClickListener()  {
 		    public void buttonClick(Button.ClickEvent event) {		    	
-		   		    	
+		   		    	//TODO: make it happen
 		    }
 		});		
 	}
@@ -158,7 +159,7 @@ public class UserFormViewUI extends CustomComponent {
             // This would be specifically only for TextFields
             if (component instanceof TextField) {               
                 map.put((String) ((TextField) component).getId(), (String) ((TextField) component).getValue());
-                  
+               
             } else if (component instanceof CheckBox) {
                 System.out.println("Alt 1: Checkbox boolean value: "
                         + ((CheckBox) component).getValue());            
@@ -167,7 +168,9 @@ public class UserFormViewUI extends CustomComponent {
         }
         
         if (startForm){
-        	getFormService().submitStartFormData(taskId,map); 
+        	
+        	String businessKey = UUID.randomUUID().toString();
+        	getFormService().submitStartFormData(taskId,businessKey,map); 
         	System.out.println("Process startform submitted with id: " + taskId);
         }else{
         	getFormService().submitTaskFormData(taskId,map); 

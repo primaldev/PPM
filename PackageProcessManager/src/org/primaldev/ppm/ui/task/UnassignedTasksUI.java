@@ -58,17 +58,38 @@ public class UnassignedTasksUI extends CustomComponent {
 		
 		dataSource = new BeanItemContainer<Task>(Task.class);
 		unAssignedTasksTable.setContainerDataSource(dataSource);
-		unAssignedTasksTable.setVisibleColumns(getVisibleColumns());
-		unAssignedTasksTable.addGeneratedColumn("name", createNameColumnGenerator());
 		
+		unAssignedTasksTable.addGeneratedColumn("name", createNameColumnGenerator());
+		unAssignedTasksTable.addGeneratedColumn("product", createProductNameColumnGenerator());
+		unAssignedTasksTable.setVisibleColumns(getVisibleColumns());
+		unAssignedTasksTable.setColumnHeader("name", "task name");
 	}
 	
 	
 	protected String[] getVisibleColumns() {
-		return new String[] { "id", "name", "description", "priority",
+		return new String[] {"product", "id", "name", "description", "priority",
 				"dueDate", "createTime" };
 	}
 
+	
+	@SuppressWarnings("serial")
+	private ColumnGenerator createProductNameColumnGenerator() {
+		return new ColumnGenerator() {
+			@Override
+			public Component generateCell(Table source, Object itemId,
+					Object columnId) {
+				Task task = (Task) itemId;
+				Label label = createTextField(task);				
+				return label;
+			}
+			
+		};
+	}
+	
+	private Label createTextField(Task task){
+		return new Label(ProcessUtil.getProductName(task));		
+	}
+	
 	
 	
 	@SuppressWarnings("serial")

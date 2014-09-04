@@ -63,9 +63,13 @@ public class UserTaskList extends CustomComponent {
 		
 		dataSource = new BeanItemContainer<Task>(Task.class);
 		userTaskTable.setContainerDataSource(dataSource);
-		userTaskTable.setVisibleColumns(getVisibleColumns());
+		
 		userTaskTable.setSizeFull();
 		userTaskTable.addGeneratedColumn("name", createNameColumnGenerator());
+		userTaskTable.addGeneratedColumn("product", createProductNameColumnGenerator());
+		userTaskTable.setVisibleColumns(getVisibleColumns());
+		userTaskTable.setColumnHeader("name", "task name");
+		
 	}
 
 	private ColumnGenerator createNameColumnGenerator() {
@@ -80,6 +84,26 @@ public class UserTaskList extends CustomComponent {
 			}
 		};
 	}
+	
+	
+	@SuppressWarnings("serial")
+	private ColumnGenerator createProductNameColumnGenerator() {
+		return new ColumnGenerator() {
+			@Override
+			public Component generateCell(Table source, Object itemId,
+					Object columnId) {
+				Task task = (Task) itemId;
+				Label label = createTextField(task);				
+				return label;
+			}
+			
+		};
+	}
+	
+	private Label createTextField(Task task){
+		return new Label(ProcessUtil.getProductName(task));		
+	}
+	
 	
 	protected PopupView createTaskPopup(final Task task) {
 		final VerticalLayout layout = new VerticalLayout();
@@ -178,7 +202,7 @@ public class UserTaskList extends CustomComponent {
 
 
 	protected String[] getVisibleColumns() {
-		return new String[] { "id", "name", "description", "priority",
+		return new String[] {"product", "id", "name", "description", "priority",
 				"dueDate", "createTime", "assignee" };
 	}
 
