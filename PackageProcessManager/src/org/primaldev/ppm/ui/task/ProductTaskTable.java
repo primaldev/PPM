@@ -14,10 +14,8 @@ import com.vaadin.ui.Table;
 
 public class ProductTaskTable extends Table {
 
-	private BeanItemContainer<Task> dataSource;
+	protected BeanItemContainer<Task> dataSource;
 	private List<Task> tasksToShow;
-	private PopupView popupView;
-	private static Logger log = Logger.getLogger(ProductTaskTable.class.getName());
 	
 	
 	public ProductTaskTable() {
@@ -27,8 +25,9 @@ public class ProductTaskTable extends Table {
 
 	private String[] getAllVisibleColumns() {
 		return new String[] {"product", "id", "name", "description", "priority",
-				"dueDate", "createTime","status" };
+				"dueDate", "createTime","status", "assignee" };
 	}
+
 
 	
 	@SuppressWarnings("serial")
@@ -38,18 +37,27 @@ public class ProductTaskTable extends Table {
 			public Component generateCell(Table source, Object itemId,
 					Object columnId) {
 				Task task = (Task) itemId;
-				Label label = createTextField(task);				
+				Label label = new Label(ProcessUtil.getProductName(task));				
 				return label;
 			}
 			
 		};
 	}
 	
-	private Label createTextField(Task task){
-		return new Label(ProcessUtil.getProductName(task));		
-	}
 	
-	
+	@SuppressWarnings("serial")
+	private ColumnGenerator createProductStatusColumnGenerator() {
+		return new ColumnGenerator() {
+			@Override
+			public Component generateCell(Table source, Object itemId,
+					Object columnId) {
+				Task task = (Task) itemId;
+				Label label = new Label(ProcessUtil.getProductStatus(task));				
+				return label;
+			}
+			
+		};
+	}	
 	
 	
 	public List<Task> getTasksToShow() {
@@ -60,7 +68,7 @@ public class ProductTaskTable extends Table {
 		dataSource = new BeanItemContainer<Task>(Task.class);
 		setContainerDataSource(dataSource);	
 		addGeneratedColumn("product", createProductNameColumnGenerator());	
-		//addGeneratedColumn("status", createProductStatusColumnGenerator());	
+		addGeneratedColumn("status", createProductStatusColumnGenerator());	
 		setVisibleColumns(getAllVisibleColumns());
 		setColumnHeader("name", "task name");		
 		dataSource.removeAllItems();
