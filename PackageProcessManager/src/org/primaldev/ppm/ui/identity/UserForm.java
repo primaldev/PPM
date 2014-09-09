@@ -167,6 +167,7 @@ public class UserForm extends CustomComponent {
 			formUser.setPassword(passwordField_1.getValue());
 			formUser.setEmail(emailField.getValue());
 			idService.saveUser(formUser);
+			idService.createMembership(userNameField.getValue(), "users");
 			UI.getCurrent().removeWindow(mywindow);
 			Notification.show("User Form",
 	                "User Added...",

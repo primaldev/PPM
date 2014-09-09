@@ -9,7 +9,9 @@ import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
 import org.primaldev.ppm.PackageprocessmanagerUI;
+import org.primaldev.ppm.event.RefreshLabels_Event;
 import org.primaldev.ppm.event.SwitchView_Event;
+import org.primaldev.ppm.ui.identity.UserListForm;
 import org.primaldev.ppm.util.ProcessUtil;
 
 import com.github.wolfie.blackboard.Blackboard;
@@ -26,7 +28,11 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupView;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
+import com.vaadin.ui.Window.CloseEvent;
+import com.vaadin.ui.Window.CloseListener;
 import com.vaadin.ui.themes.Reindeer;
 
 
@@ -56,7 +62,7 @@ public class UserTaskList extends CustomComponent {
 		setCompositionRoot(mainLayout);
 		initTable();
 		updateTaskList();
-		// TODO add user code here
+		
 	}
 	
 	private void initTable(){		
@@ -144,18 +150,18 @@ public class UserTaskList extends CustomComponent {
 			layout.addComponent(completeButton);
 		}
 
-		Button delegateToOtherUserButton = new Button(
-				"Delegate to other user...");
-		delegateToOtherUserButton.addClickListener(new Button.ClickListener() {
+		Button assignToOtherUserButton = new Button(
+				"Assign to other user...");
+		assignToOtherUserButton.addClickListener(new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				delegateToOtherUser(task);
+				assignToOtherUser(task);
 				popup.setPopupVisible(false);
 			}
 		});
-		delegateToOtherUserButton.addStyleName(Reindeer.BUTTON_SMALL);
-		layout.addComponent(delegateToOtherUserButton);
+		assignToOtherUserButton.addStyleName(Reindeer.BUTTON_SMALL);
+		layout.addComponent(assignToOtherUserButton);
 
 		return popup;
 	}
@@ -223,9 +229,56 @@ public class UserTaskList extends CustomComponent {
 						com.vaadin.ui.Notification.Type.ERROR_MESSAGE);
 	}
 	
-	public void delegateToOtherUser(Task task) {
-		//TODO Implement method
+	
+	public void assignToOtherUser(final Task task) {			
+			Window userListWindow = new Window("User List");
+			final UserListForm userList = new UserListForm(userListWindow);
+			userListWindow.setContent(userList);
+			userListWindow.setSizeUndefined();
+			UI.getCurrent().addWindow(userListWindow);
+				
+			userListWindow.addCloseListener(new CloseListener(){
+					@Override
+					public void windowClose(CloseEvent e) {
+						updateTaskList();	
+						Blackboard bb = ((PackageprocessmanagerUI)getUI()).getBlackboard();
+				        bb.fire(new RefreshLabels_Event());  
+					} 					
+			});
+
+			userListWindow.addListener(new Listener(){
+				@Override
+				public void componentEvent(Event event) {	
+					
+					try {
+						ProcessUtil.getTaskService().setAssignee(task.getId(), userList.getSelectedUser());
+						showTaskAssignmentSuccess(task);
+					} catch (Exception e) {
+						showTaskAssignmentFailure(task);
+					}
+					
+					updateTaskList();
+					Blackboard bb = ((PackageprocessmanagerUI)getUI()).getBlackboard();
+			        bb.fire(new RefreshLabels_Event()); 
+				}
+				
+			});
+		
 	}
+	
+	public void showTaskAssignmentSuccess(Task task) {
+		Notification.show(String.format("%s assigned successfully", task.getName()),
+				Notification.Type.HUMANIZED_MESSAGE);
+	}
+	
+	public void showTaskAssignmentFailure(Task task) {
+		Notification.show(
+						String.format(
+								"Could not assign %s. Please check the logs for more information.",
+								task.getName()),
+						Notification.Type.ERROR_MESSAGE);
+	}
+	
 	
 	@SuppressWarnings("serial")
 	private ColumnGenerator createProductStatusColumnGenerator() {

@@ -33,22 +33,27 @@ public class ProcessEngineServletContextListener implements
 		log.info("Initializing process engines");
 		ProcessEngines.init();
 		createGroupsIfNotPresent();
-		createAdminUserIfNotPresent();
+		createUsersIfNotPresent();
 		deployProcesses();
 	}
 
-	private void createAdminUserIfNotPresent() {
+	private void createUsersIfNotPresent() {
 		if (!isAdminUserPresent()) {
 			createAdminUser();
 		}
+		
+		if (!isTestUserPresent()) {
+			createTestUser();
+		}
+		
 	}
 
 	private void createGroupsIfNotPresent() {
 		if (!isGroupPresent("managers")) {
 			createGroup("managers", "Managers", "process");
 		}
-		if (!isGroupPresent("developers")) {
-			createGroup("developers", "Developers", "process" );
+		if (!isGroupPresent("users")) {
+			createGroup("users", "Users", "process" );
 		}
 		if (!isGroupPresent("reporters")) {
 			createGroup("reporters", "Reporters", "process");
@@ -68,6 +73,12 @@ public class ProcessEngineServletContextListener implements
 		query.userId("admin");
 		return query.count() > 0;
 	}
+	
+	private boolean isTestUserPresent() {
+		UserQuery query = getIdentityService().createUserQuery();
+		query.userId("duke");
+		return query.count() > 0;
+	}
 
 	private void createAdminUser() {
 		log.info("Creating an administration user with the username 'admin' and password 'password'");
@@ -78,10 +89,24 @@ public class ProcessEngineServletContextListener implements
 		getIdentityService().saveUser(adminUser);
 		assignAdminUserToGroups();
 	}
+	
+	private void createTestUser() {
+		log.info("Creating an test user with the username 'duke' and password 'password'");
+		User testUser = getIdentityService().newUser("duke");
+		testUser.setFirstName("Duke");
+		testUser.setLastName("Nukem");
+		testUser.setPassword("password");
+		getIdentityService().saveUser(testUser);
+		assignTestUserToGroups();
+	}
 
+	private void assignTestUserToGroups(){
+		getIdentityService().createMembership("duke", "users");
+	}
+	
 	private void assignAdminUserToGroups() {
 		getIdentityService().createMembership("admin", "managers");
-		getIdentityService().createMembership("admin", "developers");
+		getIdentityService().createMembership("admin", "users");
 		getIdentityService().createMembership("admin", "reporters");
 		getIdentityService().createMembership("admin", "siteadmin");
 	}

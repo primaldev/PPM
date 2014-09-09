@@ -114,7 +114,7 @@ public class ExploreTasks extends CustomComponent {
 		return taskAssignPopup;
 	}
 
-	public void setTasks(List<Task> tasks) {
+	protected void setTasks(List<Task> tasks) {
 		try {
 			productTaskTable_1.dataSource.removeAllItems();
 		} catch (Exception e) {
@@ -129,7 +129,7 @@ public class ExploreTasks extends CustomComponent {
 		
 	}
 	
-	protected void updateTaskList() {
+	public void updateTaskList() {
 		List<Task> tasksToShow = queryForTasksToShow();
 		setTasks(tasksToShow);
 	}
