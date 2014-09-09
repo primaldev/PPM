@@ -14,7 +14,7 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 
-public class TaskHistoryForm extends CustomComponent {
+public class TaskEventHistoryForm extends CustomComponent {
 
 	/*- VaadinEditorProperties={"grid":"RegularGrid,20","showGrid":true,"snapToGrid":true,"snapToObject":true,"movingGuides":false,"snappingDistance":10} */
 
@@ -33,7 +33,7 @@ public class TaskHistoryForm extends CustomComponent {
 	 */
 	Window mywindow;
 	Task task;
-	public TaskHistoryForm(Window mywindow, Task task) {
+	public TaskEventHistoryForm(Window mywindow, Task task) {
 		this.task=task;
 		this.mywindow = mywindow;
 		buildMainLayout();

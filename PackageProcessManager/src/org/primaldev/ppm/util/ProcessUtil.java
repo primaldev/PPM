@@ -1,6 +1,7 @@
 package org.primaldev.ppm.util;
 
 import org.activiti.engine.FormService;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
@@ -66,6 +67,10 @@ public abstract class ProcessUtil {
 	
 	public static String getProductStatus(Task task){
 		return (String) ProcessUtil.getRuntimeService().getVariable(task.getExecutionId(), "productstatus");
+	}
+	
+	public static HistoryService getHistoryService(){
+		return ProcessEngines.getDefaultProcessEngine().getHistoryService();
 	}
 
 	

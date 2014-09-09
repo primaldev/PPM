@@ -1,7 +1,11 @@
 package org.primaldev.ppm.ui.task;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.history.HistoricTaskInstanceQuery;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
 import org.primaldev.ppm.util.ProcessUtil;
@@ -191,7 +195,7 @@ public class ExploreTasks extends CustomComponent {
 		// filterAssignBox
 		filterAssignBox = new ComboBox();
 		filterAssignBox.setNullSelectionAllowed(false);		
-		filterAssignBox.setCaption("Show");
+		filterAssignBox.setCaption("Show Tasks");
 		filterAssignBox.setImmediate(true);
 		filterAssignBox.setWidth("178px");
 		filterAssignBox.setHeight("-1px");

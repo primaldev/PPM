@@ -90,7 +90,7 @@ public class TaskAssignPopup extends PopupView {
 	
 	private void showHistory(Task task){
 		Window historyWindow = new Window("User List");
-		final TaskHistoryForm historyList = new TaskHistoryForm(historyWindow, task);
+		final TaskEventHistoryForm historyList = new TaskEventHistoryForm(historyWindow, task);
 		historyWindow.setContent(historyList);
 		historyWindow.setSizeUndefined();
 		UI.getCurrent().addWindow(historyWindow);
