@@ -14,8 +14,8 @@ import com.vaadin.ui.Table;
 
 public class ProductTaskTable extends Table {
 
-	protected BeanItemContainer<Task> dataSource;
-	private List<Task> tasksToShow;
+	protected BeanItemContainer<TaskProd> dataSource;
+	private List<TaskProd> tasksToShow;
 	
 	
 	public ProductTaskTable() {
@@ -60,16 +60,16 @@ public class ProductTaskTable extends Table {
 	}	
 	
 	
-	public List<Task> getTasksToShow() {
+	public List<TaskProd> getTasksToShow() {
 		return tasksToShow;
 	}
-	public void setTasksToShow(List<Task> tasksToShow) {
+	public void setTasksToShow(List<TaskProd> tasksToShow) {
 		this.tasksToShow = tasksToShow;	
-		dataSource = new BeanItemContainer<Task>(Task.class);
+		dataSource = new BeanItemContainer<TaskProd>(TaskProd.class);
 		setContainerDataSource(dataSource);	
-		addGeneratedColumn("product", createProductNameColumnGenerator());	
-		addGeneratedColumn("status", createProductStatusColumnGenerator());	
-		setVisibleColumns(getAllVisibleColumns());
+		//addGeneratedColumn("product", createProductNameColumnGenerator());	
+		//addGeneratedColumn("status", createProductStatusColumnGenerator());	
+		//setVisibleColumns(getAllVisibleColumns());
 		setColumnHeader("name", "task name");		
 		dataSource.removeAllItems();
 		dataSource.addAll(this.tasksToShow);

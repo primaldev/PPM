@@ -65,6 +65,10 @@ public class PackageprocessmanagerUI extends UI  {
 		addClicklisteners();
 		setContent(mainLayout);		 
 		
+		userName.setValue("admin");
+		passWord.setValue("password");
+		
+		
 		blackboard.register(SwitchView_Listener.class, SwitchView_Event.class);
 		blackboard.register(RefreshLabels_Listener.class, RefreshLabels_Event.class);
 	
