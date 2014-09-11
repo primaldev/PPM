@@ -32,8 +32,8 @@ public class TaskEventHistoryForm extends CustomComponent {
 	 * visual editor.
 	 */
 	Window mywindow;
-	Task task;
-	public TaskEventHistoryForm(Window mywindow, Task task) {
+	TaskProd task;
+	public TaskEventHistoryForm(Window mywindow, TaskProd task) {
 		this.task=task;
 		this.mywindow = mywindow;
 		buildMainLayout();

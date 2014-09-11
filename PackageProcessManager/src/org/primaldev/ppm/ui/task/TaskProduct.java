@@ -2,17 +2,28 @@ package org.primaldev.ppm.ui.task;
 
 
 
-import org.activiti.engine.impl.persistence.entity.TaskEntity;
-import org.activiti.engine.task.Task;
+import java.util.Date;
+import java.util.List;
 
-public abstract class TaskProduct extends TaskEntity implements TaskProd {
+import org.activiti.engine.task.Task;
+import org.primaldev.ppm.util.ProcessUtil;
+
+public class TaskProduct  implements TaskProd {
 
 	String productName;
 	String productStatus;
+	Task task;
 	
-	public TaskProduct() {
-		// TODO Auto-generated constructor stub
+	public TaskProduct(Task task) {
+		this.task=task;
+		initValues();
 	}
+	
+	private void initValues(){
+		productName=ProcessUtil.getProductName(task);
+		productStatus=ProcessUtil.getProductStatus(task);
+	}
+	
 	
 	/* (non-Javadoc)
 	 * @see org.primaldev.ppm.ui.task.TaskProd#getProductName()
@@ -45,6 +56,65 @@ public abstract class TaskProduct extends TaskEntity implements TaskProd {
 	public void setProductStatus(String productStatus) {
 		this.productStatus = productStatus;
 	}
-	
 
+	@Override
+	public Task getTask() {
+		// TODO Auto-generated method stub
+		return task;
+	}
+
+	@Override
+	public void setTask(Task task) {
+		// TODO Auto-generated method stub
+		this.task=task;
+		initValues();
+	}
+	
+	public TaskProd getTaskProd() {
+		return this;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return task.getName();
+	}
+
+	@Override
+	public String getId() {
+		// TODO Auto-generated method stub
+		return task.getId();
+	}
+
+	@Override
+	public String getDescription() {
+		// TODO Auto-generated method stub
+		return task.getDescription();
+	}
+
+	@Override
+	public int getPriority() {
+		// TODO Auto-generated method stub
+		return task.getPriority();
+	}
+
+	@Override
+	public Date getDueDate() {
+		// TODO Auto-generated method stub
+		return task.getDueDate();
+	}
+
+	@Override
+	public Date getCreateTime() {
+		// TODO Auto-generated method stub
+		return task.getCreateTime();
+	}
+
+	@Override
+	public String getAssignee() {
+		// TODO Auto-generated method stub
+		return task.getAssignee();
+	}
+
+	
 }

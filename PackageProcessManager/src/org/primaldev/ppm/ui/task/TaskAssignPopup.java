@@ -37,7 +37,7 @@ public class TaskAssignPopup extends PopupView {
 
 		
 	@SuppressWarnings("serial")	
-	protected PopupView createTaskPopup(final Task task, VerticalLayout layout) {
+	protected PopupView createTaskPopup(final TaskProd task, VerticalLayout layout) {
 	
 		layout.setSizeUndefined();
 		layout.setMargin(true);
@@ -88,7 +88,7 @@ public class TaskAssignPopup extends PopupView {
 	}
 	
 	
-	private void showHistory(Task task){
+	private void showHistory(TaskProd task){
 		Window historyWindow = new Window("User List");
 		final TaskEventHistoryForm historyList = new TaskEventHistoryForm(historyWindow, task);
 		historyWindow.setContent(historyList);
@@ -97,7 +97,7 @@ public class TaskAssignPopup extends PopupView {
 	}
 	
 	
-	public void assignTaskToCurrentUser(Task task) {
+	public void assignTaskToCurrentUser(TaskProd task) {
 		String currentUserId = ProcessUtil.getIdOfCurrentUser();
 
 		log.log(Level.INFO, "Assigning task {1} to user {2}", new Object[] {
@@ -119,13 +119,13 @@ public class TaskAssignPopup extends PopupView {
 	
 	
 	
-	public void showTaskAssignmentSuccess(Task task) {
+	public void showTaskAssignmentSuccess(TaskProd task) {
 		Notification.show(String.format("%s assigned successfully", task.getName()),
 				Notification.Type.HUMANIZED_MESSAGE);
 	}
 
 	
-	public void showTaskAssignmentFailure(Task task) {
+	public void showTaskAssignmentFailure(TaskProd task) {
 		Notification.show(
 						String.format(
 								"Could not assign %s. Please check the logs for more information.",
@@ -134,7 +134,7 @@ public class TaskAssignPopup extends PopupView {
 	}
 	
 	
-	public void showTaskClaimFailure(Task task) {
+	public void showTaskClaimFailure(TaskProd task) {
 		Notification.show(
 						String.format(
 								"Could not claim %s. Task allready claimed.",
@@ -143,7 +143,7 @@ public class TaskAssignPopup extends PopupView {
 	}
 	
 	
-	public void assignTaskToOtherUser(final Task task) {
+	public void assignTaskToOtherUser(final TaskProd task) {
 		Window userListWindow = new Window("User List");
 		final UserListForm userList = new UserListForm(userListWindow);
 		userListWindow.setContent(userList);
