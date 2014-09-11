@@ -1,5 +1,6 @@
 package org.primaldev.ppm.ui.task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.activiti.engine.task.Task;
@@ -141,21 +142,22 @@ public class ExploreTasks extends CustomComponent {
 		return taskAssignPopup;
 	}
 	
-	private void filterTable(){
+	private List<TaskProd> filterTable(List<TaskProd> tasks){
 		
-		productTaskTable_1.dataSource.removeAllContainerFilters();
+		List<TaskProd> newList = new ArrayList<TaskProd>();
 		
 		if (filterField.getValue().length() > 0) {
-			Filter filter = new TaskTableFilter(null,"(?i:.*(" + filterField.getValue() + ").*)",filterLabel );
-			productTaskTable_1.dataSource.addContainerFilter(filter);
-			
-		}
-		
-		
-	}
-	
-	
-	
+				for (TaskProd task: tasks) {
+					if (task.hasItemRegex("(?i:.*(" + filterField.getValue() + ").*)")){
+						newList.add(task);
+					}
+				}
+				
+				return newList;			
+		} else{			
+			return tasks;
+		}		
+	}	
 
 	protected void setTasks(List<TaskProd> tasks) {
 		try {
@@ -165,9 +167,9 @@ public class ExploreTasks extends CustomComponent {
 			e.printStackTrace();
 		}
 		
-		//filterTable();
+		
 		if(tasks!=null && !tasks.isEmpty() ) {
-			productTaskTable_1.dataSource.addAll(tasks);
+			productTaskTable_1.dataSource.addAll(filterTable(tasks));
 		}
 		
 		

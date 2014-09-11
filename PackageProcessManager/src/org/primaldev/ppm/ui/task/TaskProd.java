@@ -36,7 +36,7 @@ public interface TaskProd {
 
 	public String getAssignee();
 	
-	
+	public boolean hasItemRegex(String searchString);
 	
 
 }

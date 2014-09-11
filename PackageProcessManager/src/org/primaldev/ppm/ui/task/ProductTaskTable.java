@@ -24,7 +24,7 @@ public class ProductTaskTable extends Table {
 	}
 	
 
-	private String[] getAllVisibleColumns() {
+	protected String[] getAllVisibleColumns() {
 		return new String[] {"id" ,"name", "productName", "description", "priority",
 				"dueDate", "createTime","productStatus", "assignee" };
 	}

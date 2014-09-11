@@ -116,5 +116,21 @@ public class TaskProduct  implements TaskProd {
 		return task.getAssignee();
 	}
 
+	@Override
+	public boolean hasItemRegex(String searchString) {
+		// TODO Auto-generated method stub
+		
+		if (getAssignee() !=null && getAssignee().matches(searchString)) return true;
+		if (getDescription() !=null && getDescription().matches(searchString)) return true;
+		if (getId() !=null && getId().matches(searchString)) return true;
+		if (getName() !=null && getName().matches(searchString)) return true;
+		if (getProductStatus() !=null && getProductStatus().matches(searchString)) return true;
+		if (getProductName() !=null && getProductName().matches(searchString)) return true;
+		
+		return false;
+	}
+
+	
+
 	
 }

@@ -19,13 +19,19 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.shared.Position;
 import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
 @Theme("packageprocessmanager")
@@ -99,6 +105,7 @@ public class PackageprocessmanagerUI extends UI  {
 		mainUI = new MainUI();
 		getBlackboard().addListener(mainUI);
 		setContent(mainUI);
+		
 	}
 	
 
@@ -203,25 +210,40 @@ public class PackageprocessmanagerUI extends UI  {
 		mainLayout.setWidth("100%");
 		mainLayout.setHeight("100%");
 		
+			
 		// top-level component properties
 		setWidth("100.0%");
 		setHeight("100.0%");
+		
+		VerticalLayout loginPanel = new VerticalLayout();
+		loginPanel.setSpacing(true);
+		loginPanel.setWidth("300px");
+
+		Label header = new Label("Please login");
+		header.addStyleName(Reindeer.LABEL_H1);
+		loginPanel.addComponent(header);		
 		
 		// userName
 		userName = new TextField();
 		userName.setCaption("User Name");
 		userName.setImmediate(false);
-		userName.setWidth("180px");
+		userName.setWidth("100%");
 		userName.setHeight("-1px");
-		mainLayout.addComponent(userName, "top:176.0px;left:260.0px;");
+		loginPanel.addComponent(userName);
 		
 		// passWord
 		passWord = new PasswordField();
 		passWord.setCaption("Password");
 		passWord.setImmediate(false);
-		passWord.setWidth("180px");
+		passWord.setWidth("100%");
 		passWord.setHeight("-1px");
-		mainLayout.addComponent(passWord, "top:220.0px;left:260.0px;");
+		loginPanel.addComponent(passWord);
+		
+		HorizontalLayout buttons = new HorizontalLayout();
+		buttons.setSpacing(true);
+		loginPanel.addComponent(buttons);
+		loginPanel.setComponentAlignment(buttons, Alignment.MIDDLE_RIGHT);
+		
 		
 		// loginButton
 		loginButton = new Button();
@@ -229,7 +251,13 @@ public class PackageprocessmanagerUI extends UI  {
 		loginButton.setImmediate(true);
 		loginButton.setWidth("-1px");
 		loginButton.setHeight("-1px");
-		mainLayout.addComponent(loginButton, "top:260.0px;left:380.0px;");
+		buttons.addComponent(loginButton);
+		
+		mainLayout.addComponent(loginPanel,"top:30%;left:40%;");
+		
+		mainLayout.setSizeFull();
+		mainLayout.addStyleName(Reindeer.LAYOUT_BLACK);
+
 		
 		return mainLayout;
 	}
