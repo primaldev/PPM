@@ -2,6 +2,7 @@ package org.primaldev.ppm.util;
 
 import org.activiti.engine.FormService;
 import org.activiti.engine.HistoryService;
+import org.activiti.engine.IdentityService;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
@@ -73,5 +74,10 @@ public abstract class ProcessUtil {
 		return ProcessEngines.getDefaultProcessEngine().getHistoryService();
 	}
 
+	
+	public static IdentityService getIdentityService() {
+		return ProcessEngines.getDefaultProcessEngine().getIdentityService();
+	}
+	
 	
 }

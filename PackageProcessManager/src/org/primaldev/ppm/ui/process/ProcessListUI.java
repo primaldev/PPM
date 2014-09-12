@@ -206,11 +206,11 @@ public class ProcessListUI extends CustomComponent {
 		// common part: create layout
 		mainLayout = new AbsoluteLayout();
 		mainLayout.setImmediate(false);
-		mainLayout.setWidth("914px");
+		mainLayout.setWidth("1000px");
 		mainLayout.setHeight("500px");
 		
 		// top-level component properties
-		setWidth("914px");
+		setWidth("1000px");
 		setHeight("500px");
 		
 		// processListTable
@@ -219,7 +219,7 @@ public class ProcessListUI extends CustomComponent {
 		processListTable.setWidth("100.0%");
 		processListTable.setHeight("100.0%");
 		mainLayout.addComponent(processListTable,
-				"top:0.0px;right:20.0px;bottom:20.0px;left:0.0px;");
+				"top:10.0px;right:100.0px;bottom:100.0px;left:2.0px;");
 		
 		return mainLayout;
 	}
