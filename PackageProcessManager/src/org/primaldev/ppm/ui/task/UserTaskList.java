@@ -109,7 +109,7 @@ public class UserTaskList extends CustomComponent {
 		
 		if (task!=null){
 			String commentText=">";
-			List<Comment> comments = ProcessUtil.getTaskService().getTaskComments(task.getId());
+			List<Comment> comments = ProcessUtil.getTaskService().getProcessInstanceComments(task.getProcessInstanceId());
 			if (comments.size() > 0 ){
 				commentText=">>\n";
 			}

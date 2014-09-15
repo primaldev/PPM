@@ -71,6 +71,19 @@ public class TaskAssignPopup extends PopupView {
 		});
 		layout.addComponent(assignToOtherButton);
 		
+		Button showCommentsButton = new Button("Show Comments");
+		showCommentsButton.addStyleName(Reindeer.BUTTON_SMALL);
+		showCommentsButton.addClickListener(new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				showComments(task);
+				setPopupVisible(false);
+			}
+		});
+		layout.addComponent(showCommentsButton);
+		
+		
 		
 		Button showHistoryButton = new Button("Show History");
 		showHistoryButton.addStyleName(Reindeer.BUTTON_SMALL);
@@ -87,9 +100,17 @@ public class TaskAssignPopup extends PopupView {
 		return this;
 	}
 	
+	private void showComments(TaskProd task){
+		Window commentsWindow = new Window("Task Comments");
+		final TaskCommentsForm taskComments = new TaskCommentsForm(commentsWindow, task);
+		commentsWindow.setContent(taskComments);
+		commentsWindow.setSizeUndefined();
+		UI.getCurrent().addWindow(commentsWindow);
+	}
+	
 	
 	private void showHistory(TaskProd task){
-		Window historyWindow = new Window("User List");
+		Window historyWindow = new Window("Task History");
 		final TaskEventHistoryForm historyList = new TaskEventHistoryForm(historyWindow, task);
 		historyWindow.setContent(historyList);
 		historyWindow.setSizeUndefined();

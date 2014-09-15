@@ -186,20 +186,26 @@ public class UserFormViewUI extends CustomComponent {
               
         }
         
-        if (startForm){        	
-        	String businessKey = UUID.randomUUID().toString();
-        	getFormService().submitStartFormData(taskId,businessKey,map);  	
-         
-        	System.out.println("Process startform submitted with id: " + taskId);
+        if (startForm){
+        	String userId = ProcessUtil.getIdOfCurrentUser();
+        	if (userId !=null){        		
+        		String businessKey = UUID.randomUUID().toString();
+        		getFormService().submitStartFormData(taskId,businessKey,map); 
+        		System.out.println("Process startform submitted with id: " + taskId);
+        	}else{
+        		Notification.show("Bad User", "Username unknown, not posting", Notification.Type.ERROR_MESSAGE);
+        	}
         	
         }else{
         	String userId = ProcessUtil.getIdOfCurrentUser();
         	if (userId !=null){
-        		ProcessUtil.getIdentityService().setAuthenticatedUserId(userId);
-        	  if (commentField.getValue().length() > 0) {        		
-              	ProcessUtil.getTaskService().addComment(task.getId(), task.getProcessInstanceId(), commentField.getValue());
-              }
-        	  getFormService().submitTaskFormData(taskId,map);
+        		
+        		ProcessUtil.getIdentityService().setAuthenticatedUserId(userId);        	    
+          	    if (commentField.getValue().length() > 0) {        		
+                	ProcessUtil.getTaskService().addComment(task.getId(), task.getProcessInstanceId(), commentField.getValue());
+                }
+          	    getFormService().submitTaskFormData(taskId,map);
+          	  
         	}else{
         		Notification.show("Bad User", "Username unknown, not posting", Notification.Type.ERROR_MESSAGE);
         	}
