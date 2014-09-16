@@ -57,8 +57,11 @@ public class TaskCommentsForm extends CustomComponent {
 		if (comments.size() > 0 ){
 			commentText=">>\n";
 		}
-		for (Comment comment:comments){
-			commentText += comment.getUserId() + ":\n";
+		for (Comment comment:comments){			
+			//sometimes null values are displayed, logout login solves it
+			if(comment.getUserId() !=null){
+				commentText += comment.getUserId() + ":\n";
+			}
 			commentText += comment.getFullMessage();
 			commentText += "\n\n";
 		}

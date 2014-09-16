@@ -13,6 +13,7 @@ import org.primaldev.ppm.event.SwitchView_Event;
 import org.primaldev.ppm.event.SwitchView_Listener;
 import org.primaldev.ppm.ui.identity.IdentityManagementUI;
 import org.primaldev.ppm.ui.process.ProcessListUI;
+import org.primaldev.ppm.ui.process.ProcessManageUI;
 import org.primaldev.ppm.ui.process.form.UserFormViewUI;
 import org.primaldev.ppm.ui.task.ExploreTasks;
 import org.primaldev.ppm.ui.task.UserTaskList;
@@ -81,7 +82,7 @@ public class MainUI extends CustomComponent implements View, SwitchView_Listener
 	ExploreTasks unassignedTasksUI;
 	ExploreTasks exploreTasks;
 	TaskHistory taskHistory;
-	
+	ProcessManageUI processManageUI;
 	/*- VaadinEditorProperties={"grid":"RegularGrid,20","showGrid":true,"snapToGrid":true,"snapToObject":true,"movingGuides":false,"snappingDistance":10} */
 	
 	
@@ -138,6 +139,8 @@ public class MainUI extends CustomComponent implements View, SwitchView_Listener
 			initIdentityTab();
 		}else if (menuTree.getValue().equals(MainMenu.START_TASK)) {
 			initProcessList();
+		}else if (menuTree.getValue().equals(MainMenu.PROCESSES)) {
+			initProcessManage();
 		}
 		
 		
@@ -279,6 +282,20 @@ public class MainUI extends CustomComponent implements View, SwitchView_Listener
 			mainTabSheet.setSelectedTab(processListUI);
 		
 	}
+	
+	private void initProcessManage(){
+		mainTabSheet.removeComponent(processManageUI);
+		processManageUI = new ProcessManageUI();
+		processManageUI.setImmediate(false);
+		processManageUI.setWidth("100.0%");
+		processManageUI.setHeight("100.0%");
+		
+			mainTabSheet.addTab(processManageUI, "Manage Processes", null);
+			mainTabSheet.getTab(processManageUI).setClosable(true);
+			mainTabSheet.setSelectedTab(processManageUI);
+		
+	}
+	
 	
 	private void initUserFormViewUI(){
 		mainTabSheet.removeComponent(userFormViewUI);
