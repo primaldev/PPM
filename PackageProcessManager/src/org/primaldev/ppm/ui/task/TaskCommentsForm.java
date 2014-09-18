@@ -1,5 +1,8 @@
 package org.primaldev.ppm.ui.task;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.activiti.engine.task.Comment;
@@ -59,9 +62,9 @@ public class TaskCommentsForm extends CustomComponent {
 		}
 		for (Comment comment:comments){			
 			//sometimes null values are displayed, logout login solves it
-			if(comment.getUserId() !=null){
-				commentText += comment.getUserId() + ":\n";
-			}
+			//if(comment.getUserId() !=null){
+				//commentText += comment.getUserId() + ":\n";
+			//}
 			commentText += comment.getFullMessage();
 			commentText += "\n\n";
 		}
@@ -90,7 +93,9 @@ public class TaskCommentsForm extends CustomComponent {
 			String userId = ProcessUtil.getIdOfCurrentUser();
         	if (userId !=null){
         		ProcessUtil.getTaskService().addUserIdentityLink(task.getId(), userId, IdentityLinkType.PARTICIPANT);
-        		ProcessUtil.getTaskService().addComment(task.getId(), task.getTask().getProcessInstanceId(), newCommentText.getValue());
+        		Calendar cal = Calendar.getInstance();
+        		SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");	
+        		ProcessUtil.getTaskService().addComment(task.getId(), task.getTask().getProcessInstanceId(), "[" + sdf.format(cal.getTime())  + "]  " + userId + ": " + newCommentText.getValue());
         		initTable();
         	}else{
         		Notification.show("Bad User", "Username unknown, not posting", Notification.Type.ERROR_MESSAGE);

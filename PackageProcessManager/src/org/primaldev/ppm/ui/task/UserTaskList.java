@@ -114,7 +114,7 @@ public class UserTaskList extends CustomComponent {
 				commentText=">>\n";
 			}
 			for (Comment comment:comments){
-				commentText += comment.getUserId() + ":\n";
+		//		commentText += comment.getUserId() + ":\n";
 				commentText += comment.getFullMessage();
 				commentText += "\n\n";
 			}

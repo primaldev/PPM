@@ -1,5 +1,7 @@
 package org.primaldev.ppm.ui.process.form;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.UUID;
@@ -201,8 +203,10 @@ public class UserFormViewUI extends CustomComponent {
         	if (userId !=null){
         		
         		ProcessUtil.getIdentityService().setAuthenticatedUserId(userId);        	    
-          	    if (commentField.getValue().length() > 0) {        		
-                	ProcessUtil.getTaskService().addComment(task.getId(), task.getProcessInstanceId(), commentField.getValue());
+          	    if (commentField.getValue().length() > 0) {     
+          	    	Calendar cal = Calendar.getInstance();
+            		SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
+                	ProcessUtil.getTaskService().addComment(task.getId(), task.getProcessInstanceId(),"[" + sdf.format(cal.getTime())  + "]  " + userId + ": " + commentField.getValue());
                 }
           	    getFormService().submitTaskFormData(taskId,map);
           	  
