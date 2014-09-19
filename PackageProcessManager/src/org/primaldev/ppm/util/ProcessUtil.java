@@ -3,6 +3,7 @@ package org.primaldev.ppm.util;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.List;
 
 import org.activiti.engine.FormService;
 import org.activiti.engine.HistoryService;
@@ -12,6 +13,8 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.impl.context.Context;
+import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
 
@@ -108,6 +111,10 @@ public abstract class ProcessUtil {
 		return select.executeQuery(sql);
 		}
 
-	
+	public static List<ProcessDefinition> getAllProcessDefinitions() {
+			ProcessDefinitionQuery query = getRepositoryService()
+					.createProcessDefinitionQuery();
+			return query.orderByProcessDefinitionName().asc().list();
+		}
 	
 }
