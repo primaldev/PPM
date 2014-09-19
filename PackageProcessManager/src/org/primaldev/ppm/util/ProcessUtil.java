@@ -1,5 +1,9 @@
 package org.primaldev.ppm.util;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 import org.activiti.engine.FormService;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
@@ -7,7 +11,9 @@ import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.impl.context.Context;
 import org.activiti.engine.task.Task;
+import org.activiti.engine.task.TaskQuery;
 
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Component;
@@ -78,6 +84,30 @@ public abstract class ProcessUtil {
 	public static IdentityService getIdentityService() {
 		return ProcessEngines.getDefaultProcessEngine().getIdentityService();
 	}
+	
+	
+	
+	public long getNumberOfTasksAssignedToCurrentUser() {
+		String currentUser = ProcessUtil.getIdOfCurrentUser();
+		TaskQuery query = ProcessUtil.getTaskService().createTaskQuery();
+		return query.taskAssignee(currentUser).count();
+	}
+	
+	public long getNumberOfUnassignedTasks() {
+		String currentUser = ProcessUtil.getIdOfCurrentUser();
+		TaskQuery query = ProcessUtil.getTaskService().createTaskQuery();
+		return query.taskUnassigned().taskCandidateUser(currentUser).count();
+	}
+	
+	public static Connection getCurrentDatabaseConnection() {
+		return Context.getCommandContext().getDbSqlSession().getSqlSession().getConnection();
+		}
+		public static ResultSet executeSelectSqlQuery(String sql) throws Exception {
+		Connection connection = getCurrentDatabaseConnection();
+		Statement select = connection.createStatement();
+		return select.executeQuery(sql);
+		}
+
 	
 	
 }

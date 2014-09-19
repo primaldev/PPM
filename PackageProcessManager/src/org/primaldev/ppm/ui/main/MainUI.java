@@ -229,7 +229,8 @@ public class MainUI extends CustomComponent implements View, SwitchView_Listener
 		
 		availableTasks.setImmediate(true);
 		userTask.setCaption("My Tasks (" + getNumberOfTasksAssignedToCurrentUser()  + ")");
-		availableTasks.setCaption("Available Tasks ("+ getNumberOfUnassignedTasks() + ")");
+		availableTasks.setCaption("Available Tasks ("+ getNumberOfUnassignedTasks() + ")");		
+	
 		
 	}
 	
@@ -332,7 +333,7 @@ public class MainUI extends CustomComponent implements View, SwitchView_Listener
 		unassignedTasksUI.setHeight("100.0%");
 		
 		
-			mainTabSheet.addTab(unassignedTasksUI, "Unassigned Tasks", null);
+			mainTabSheet.addTab(unassignedTasksUI, "Available Tasks ("+ getNumberOfUnassignedTasks() + ")", null);
 			mainTabSheet.getTab(unassignedTasksUI).setClosable(true);
 			mainTabSheet.setSelectedTab(unassignedTasksUI);	
 					

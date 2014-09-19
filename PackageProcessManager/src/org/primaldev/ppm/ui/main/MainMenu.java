@@ -50,14 +50,15 @@ public class MainMenu {
 			};
 			buildMenu(managerItems);
 			
-			
+		/*	
 			//if admin role
+			 * future reference for themes colors and site managemnt
 			final String[][] adminItems =new String[][]{ 
 					new String[]{SITE_ADMIN, MODULES}
 			};
 			buildMenu(adminItems);		
 		
-		
+		*/
 	}
 	
 	private void buildMenu(String[][] menuItems) {
