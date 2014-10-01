@@ -1,8 +1,12 @@
 package org.primaldev.ppm.util;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 
 import org.activiti.bpmn.BpmnAutoLayout;
+import org.activiti.engine.impl.context.Context;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
@@ -11,6 +15,11 @@ import org.activiti.workflow.simple.converter.WorkflowDefinitionConversion;
 import org.activiti.workflow.simple.converter.WorkflowDefinitionConversionFactory;
 import org.activiti.workflow.simple.definition.WorkflowDefinition;
 import org.primaldev.ppm.ui.process.ProcessListUI;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
 
 public class ReportUtil {
 	
@@ -24,11 +33,11 @@ public class ReportUtil {
 		 // Script (just plain String for the moment)
 		 String script = "importPackage(java.sql);" +
 		 "importPackage(java.lang);" +
-		 "importPackage(org.activiti.explorer.reporting);" +
+		 "importPackage(org.primaldev.ppm.util);" +
 		 "" +
 		 "var processDefinitionId = '" + processDefinitionId + "';" +
 		 "" +
-		 "var result = ReportingUtil.executeSelectSqlQuery(\"select NAME_, avg(DURATION_) from ACT_HI_TASKINST where PROC_DEF_ID_ = '"
+		 "var result = ReportUtil.executeSelectSqlQuery(\"select NAME_, avg(DURATION_) from ACT_HI_TASKINST where PROC_DEF_ID_ = '"
 		 + processDefinitionId + "' and END_TIME_ is not null group by NAME_\");" +
 		 "" +
 		 "var reportData = new ReportData();" +
@@ -80,14 +89,13 @@ public static ProcessInstance getProcessListDuration() {
 	
 	String script = "importPackage(java.sql);" +
 	  "importPackage(java.lang);" +
-	  "importPackage(org.activiti.explorer.reporting);" + 	 
-	  "var result = ReportingUtil.executeSelectSqlQuery(\"SELECT PD.NAME_, PD.VERSION_ , count(*) FROM ACT_HI_PROCINST PI" + 
-	       "inner join ACT_RE_PROCDEF PD on PI.PROC_DEF_ID_ = PD.ID_ group by PROC_DEF_ID_\");" +
+	  "importPackage(org.primaldev.ppm.util);" + 	 
+	  "var result = ReportUtil.executeSelectSqlQuery(\"SELECT PD.NAME_, PD.VERSION_ , count(*) FROM ACT_HI_PROCINST PI inner join ACT_RE_PROCDEF PD on PI.PROC_DEF_ID_ = PD.ID_ group by PROC_DEF_ID_\");" +
 	 ""+
 	  "var reportData = {};" +
 	  "reportData.datasets = [];" +
 	   ""+	  
-	 "var dataset = reportData.newDataset();" +
+	 "var dataset = {};" +
 	  "dataset.type = \"pieChart\";" +
 	  "dataset.description = \"Process instance overview (\" + new java.util.Date() + \")\";" + 
 	  "dataset.data = {};"+
@@ -138,9 +146,20 @@ public static ProcessInstance getProcessListDuration() {
 private static ProcessDefinition getProcessDefinition(String deploymentId) {
 	ProcessDefinitionQuery query = ProcessUtil.getRepositoryService()
 			.createProcessDefinitionQuery();
-	return query.orderByProcessDefinitionName().deploymentId(deploymentId).singleResult();
+	return query.deploymentId(deploymentId).singleResult();
 }
 	  
 	
+  public static ResultSet executeSelectSqlQuery(String sql) throws Exception {
+    
+    Connection connection = getCurrentDatabaseConnection();
+    Statement select = connection.createStatement();
+    return select.executeQuery(sql);
+  }
+  
+
+  public static Connection getCurrentDatabaseConnection() {
+    return Context.getCommandContext().getDbSqlSession().getSqlSession().getConnection();
+  }
 
 }
