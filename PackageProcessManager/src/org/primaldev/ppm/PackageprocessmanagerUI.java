@@ -21,6 +21,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.Position;
+import com.vaadin.shared.ui.Connect;
 import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -57,9 +58,11 @@ public class PackageprocessmanagerUI extends UI  {
 	 // private final Blackboard blackboardInstance = new Blackboard();
 	
 	
-	@WebServlet(value = "/*", asyncSupported = true)
-	@VaadinServletConfiguration(productionMode = false, ui = PackageprocessmanagerUI.class, widgetset="org.dussan.vaadin.dcharts.DCharts")	
+	//Check the Error log for output (Show view -> error.log) because the widget compiler uses the wrong path 
 	
+	@WebServlet(value = "/*", asyncSupported = true)
+	@VaadinServletConfiguration(productionMode = false, ui = PackageprocessmanagerUI.class, widgetset="org.primaldev.ppm.ui.main.PackageprocessmanagerWidgetset")	
+    
 	public static class Servlet extends VaadinServlet {
 		
 	}

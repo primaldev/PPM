@@ -103,11 +103,14 @@ public abstract class ProcessUtil {
 	public static Connection getCurrentDatabaseConnection() {
 		return Context.getCommandContext().getDbSqlSession().getSqlSession().getConnection();
 		}
-		public static ResultSet executeSelectSqlQuery(String sql) throws Exception {
+		
+	
+	public static ResultSet executeSelectSqlQuery(String sql) throws Exception {
 		Connection connection = getCurrentDatabaseConnection();
 		Statement select = connection.createStatement();
 		return select.executeQuery(sql);
-		}
+		
+	}
 
 	public static List<ProcessDefinition> getAllProcessDefinitions() {
 			ProcessDefinitionQuery query = getRepositoryService()

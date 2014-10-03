@@ -23,10 +23,15 @@
             <value>com.vaadin.portal.gwt.PortalDefaultWidgetSet</value>
         </init-param>
         -->
+        
+        <!--  Check the Error log for output (Show view -> error.log) because the widget compiler
+        		uses the wrong path -->
+         <!--		
         <init-param>
             <name>widgetset</name>
-            <value>com.vaadin.terminal.gwt.DefaultWidgetSet</value>
+            <value>org.primaldev.ppm.ui.main.PackageprocessmanagerWidgetset</value>
         </init-param>
+        -->
         <!-- Supported portlet modes and content types. -->
         <supports>
             <mime-type>text/html</mime-type>

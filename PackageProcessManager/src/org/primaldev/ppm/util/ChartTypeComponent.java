@@ -14,6 +14,7 @@ package org.primaldev.ppm.util;
 
 import org.dussan.vaadin.dcharts.DCharts;
 
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -30,7 +31,7 @@ public class ChartTypeComponent extends VerticalLayout {
 
     if (title != null) {
       Label label = new Label(title);
-      label.addStyleName(Reindeer.LABEL_H2);
+      label.addStyleName(Reindeer.LABEL_H1);
       addComponent(label);
     }
 
@@ -38,8 +39,8 @@ public class ChartTypeComponent extends VerticalLayout {
 
   public void addChart(String description, Component chart, String errorMessage) {
 
-    addComponent(new Label("&nbsp;", Label.CONTENT_XHTML));
-    addComponent(new Label("&nbsp;", Label.CONTENT_XHTML));
+    addComponent(new Label("&nbsp;", ContentMode.HTML));
+    addComponent(new Label("&nbsp;", ContentMode.HTML));
 
     // Description
     if (description != null) {
@@ -47,15 +48,15 @@ public class ChartTypeComponent extends VerticalLayout {
       label.addStyleName(Reindeer.LABEL_H2);
       addComponent(label);
 
-      addComponent(new Label("&nbsp;", Label.CONTENT_XHTML));
+      addComponent(new Label("&nbsp;", ContentMode.HTML));
     }
 
     // Chart
     if (chart != null) {
       if (chart instanceof DCharts) {
         // DCharts doesn't know how to size itself
-        chart.setWidth(600, UNITS_PIXELS);
-        chart.setHeight(450, UNITS_PIXELS);
+        chart.setWidth(400, Unit.PIXELS);
+        chart.setHeight(250, Unit.PIXELS);
         ((DCharts) chart).show();
       }
       addComponent(chart);
