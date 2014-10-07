@@ -223,14 +223,14 @@ public class MainUI extends CustomComponent implements View, SwitchView_Listener
 		
 	}
 	
-
-	
 	public void setLabels(){
 		
 		availableTasks.setImmediate(true);
 		userTask.setCaption("My Tasks (" + getNumberOfTasksAssignedToCurrentUser()  + ")");
-		availableTasks.setCaption("Available Tasks ("+ getNumberOfUnassignedTasks() + ")");		
-	
+		availableTasks.setCaption("Available Tasks ("+ getNumberOfUnassignedTasks() + ")");	
+		if (unassignedTasksUI!=null) {
+			mainTabSheet.getTab(unassignedTasksUI).setCaption("Available Tasks ("+ getNumberOfUnassignedTasks() + ")");
+		}
 		
 	}
 	

@@ -14,6 +14,8 @@ import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.GroupQuery;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.identity.UserQuery;
+import org.activiti.engine.repository.Deployment;
+import org.primaldev.ppm.util.ProcessUtil;
 
 @WebListener
 public class ProcessEngineServletContextListener implements
@@ -135,11 +137,12 @@ public class ProcessEngineServletContextListener implements
 		log.info("Deploying processes");
 		RepositoryService repositoryService = ProcessEngines
 				.getDefaultProcessEngine().getRepositoryService();
-		repositoryService
+		Deployment res = repositoryService
 				.createDeployment()
 				.addClasspathResource(
 						"org/primaldev/ppm/bpmn/QuickProcess.bpmn")
 				.deploy();
+		 repositoryService.addCandidateStarterGroup(ProcessUtil.getProcessDefinitionByDeploymentId(res.getId()).getId(), "users");
 	}
 
 }

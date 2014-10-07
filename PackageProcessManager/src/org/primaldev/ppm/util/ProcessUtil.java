@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
+
 import org.activiti.bpmn.BpmnAutoLayout;
 import org.activiti.engine.FormService;
 import org.activiti.engine.HistoryService;
@@ -20,6 +21,7 @@ import org.activiti.engine.task.TaskQuery;
 import org.activiti.workflow.simple.converter.WorkflowDefinitionConversion;
 import org.activiti.workflow.simple.converter.WorkflowDefinitionConversionFactory;
 import org.activiti.workflow.simple.definition.WorkflowDefinition;
+
 import com.vaadin.server.VaadinSession;
 
 public abstract class ProcessUtil {
@@ -119,6 +121,10 @@ public abstract class ProcessUtil {
 		}
 	
 	
-	
+	public static ProcessDefinition getProcessDefinitionByDeploymentId(String deploymentId) {
+		ProcessDefinitionQuery query = ProcessUtil.getRepositoryService()
+				.createProcessDefinitionQuery();
+		return query.deploymentId(deploymentId).singleResult();
+	}
 	
 }

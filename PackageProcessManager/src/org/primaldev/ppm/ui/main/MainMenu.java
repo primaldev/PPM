@@ -19,12 +19,12 @@ public class MainMenu {
 	public static final String AVAILABLE_TASKS = "Available Tasks";
 	public static final String EXPLORE_TASKS = "Task Explorer";
 	public static final String COMPLETED_TASKS = "Completed Tasks";
-	public static final String START_TASK = "Start Task";
+	public static final String START_TASK = "Process";
 	public static final String MANAGE = "Manage";
 	public static final String PROCESSES = "Processes";
 	public static final String IDENTITY = "Identity";
 	public static final String SITE_ADMIN = "Site Admin";
-	public static final String MODULES = "Modules";
+	public static final String CONFIGURATION = "Configuration";
 	
 	
 	public MainMenu(Tree tree) {
@@ -39,26 +39,26 @@ public class MainMenu {
 			tree.removeAllItems();
 		
 			final String[][] userItems = new String[][]{
-					 new String[]{HOME, MY_TASKS,AVAILABLE_TASKS, EXPLORE_TASKS,START_TASK,COMPLETED_TASKS }
+					 new String[]{HOME, MY_TASKS,AVAILABLE_TASKS,START_TASK }
 			};
 			
 			buildMenu(userItems);
 			
 			//if manager role
 			final String[][] managerItems =new String[][]{ 
-					new String[]{MANAGE, PROCESSES,IDENTITY }
+					new String[]{MANAGE, EXPLORE_TASKS, COMPLETED_TASKS, PROCESSES,IDENTITY }
 			};
 			buildMenu(managerItems);
 			
-		/*	
+		
 			//if admin role
-			 * future reference for themes colors and site managemnt
+			
 			final String[][] adminItems =new String[][]{ 
-					new String[]{SITE_ADMIN, MODULES}
+					new String[]{SITE_ADMIN, CONFIGURATION}
 			};
 			buildMenu(adminItems);		
 		
-		*/
+		
 	}
 	
 	private void buildMenu(String[][] menuItems) {

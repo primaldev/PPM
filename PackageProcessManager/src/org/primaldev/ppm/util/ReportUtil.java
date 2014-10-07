@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ReportUtil {
 	
+	public static final String PROCESS_CATOGORY_NAME = "activiti-report";
 	public static final String PROCESS_OVEVIEW_NAME = "_01 Process report";
 	public static final String TAKS_DURATION_NAME = "_02 Task Duration";
 	
@@ -32,6 +33,8 @@ public class ReportUtil {
 		 ProcessDefinition processDefinition = ProcessUtil.getRepositoryService().createProcessDefinitionQuery()
 		 .processDefinitionId(processDefinitionId).singleResult();
 		 
+		 if (processDefinition != null) { 
+		 
 		 // Report description
 		 String reportDescription = "Average task duration report for process definition " + processDefinition.getName() + " ( version " + processDefinition.getVersion() + ")";
 		 // Script (just plain String for the moment)
@@ -39,10 +42,10 @@ public class ReportUtil {
 		 "importPackage(java.lang);" +
 		 "importPackage(org.primaldev.ppm.util);" +
 		 "" +
-		 "var processDefinitionId = '" + processDefinitionId + "';" +
+		 "var processDefinitionId = \'" + processDefinitionId + "\';" +
 		 "" +
-		 "var result = ReportUtil.executeSelectSqlQuery(\"select NAME_, avg(DURATION_) from ACT_HI_TASKINST where PROC_DEF_ID_ = '"
-		 + processDefinitionId + "' and END_TIME_ is not null group by NAME_\");" +
+		 "var result = ReportUtil.executeSelectSqlQuery(\"select NAME_, avg(DURATION_) from ACT_HI_TASKINST where PROC_DEF_ID_ = \'"
+		 + processDefinitionId + "\' and END_TIME_ is not null group by NAME_\");" +
 		 "" +
 		 "var reportData = {};" +
 		 "reportData.datasets = [];" +
@@ -58,7 +61,11 @@ public class ReportUtil {
 		 "" +
 		 "execution.setVariable('reportData', reportData.toBytes());";	
 		 
+		 
 		 return startReportProcess(TAKS_DURATION_NAME, reportDescription, script );
+		 } 
+		 
+		 return null;
 		    
 	 }
 	
@@ -108,7 +115,7 @@ public static ProcessInstance startReportProcess(String name,String reportDescri
 	    WorkflowDefinitionConversion conversion = convertFactory
 	            .createWorkflowDefinitionConversion(workflowDefinition);
 	    conversion.convert();
-	    conversion.getBpmnModel().setTargetNamespace("activiti-report");
+	    conversion.getBpmnModel().setTargetNamespace(PROCESS_CATOGORY_NAME);
 	    
 	    // Generate DI
 	    BpmnAutoLayout bpmnAutoLayout = new BpmnAutoLayout(conversion.getBpmnModel());
