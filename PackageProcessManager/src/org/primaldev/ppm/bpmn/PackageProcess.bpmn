@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.ocydrome.com/package_process">
+  <collaboration id="Collaboration">
+    <participant id="pool1" name="Pool" processRef="package_process"></participant>
+  </collaboration>
+  <process id="package_process" name="Package Process" isExecutable="true">
+    <laneSet id="laneSet_package_process">
+      <lane id="intake" name="Intake">
+        <flowNodeRef>start</flowNodeRef>
+      </lane>
+      <lane id="package" name="Package"></lane>
+    </laneSet>
+    <startEvent id="start" name="Start" activiti:initiator="intaker" activiti:formKey="newPackageProcess">
+      <extensionElements>
+        <activiti:formProperty id="app_Name" name="Name" required="true"></activiti:formProperty>
+        <activiti:formProperty id="app_Manufacturer" name="Manufacturer" required="true"></activiti:formProperty>
+        <activiti:formProperty id="app_Version" name="Version" required="true"></activiti:formProperty>
+        <activiti:formProperty id="app_ArchType" name="64 Bit" type="boolean" default="false"></activiti:formProperty>
+      </extensionElements>
+    </startEvent>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Collaboration">
+    <bpmndi:BPMNPlane bpmnElement="Collaboration" id="BPMNPlane_Collaboration">
+      <bpmndi:BPMNShape bpmnElement="pool1" id="BPMNShape_pool1">
+        <omgdc:Bounds height="561.0" width="1101.0" x="140.0" y="90.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="intake" id="BPMNShape_intake">
+        <omgdc:Bounds height="251.0" width="1081.0" x="160.0" y="90.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="package" id="BPMNShape_package">
+        <omgdc:Bounds height="310.0" width="1081.0" x="160.0" y="341.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="35.0" width="35.0" x="200.0" y="180.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

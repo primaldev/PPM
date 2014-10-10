@@ -4,13 +4,16 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 import org.activiti.engine.FormService;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.form.FormProperty;
+import org.activiti.engine.form.FormType;
 import org.activiti.engine.form.StartFormData;
 import org.activiti.engine.form.TaskFormData;
+import org.activiti.engine.impl.form.BooleanFormType;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
@@ -115,30 +118,57 @@ public class UserFormViewUI extends CustomComponent {
 	}
 	
 	
-	protected void populateStartProcessFormFields(StartFormData formData) {
-			int i=100;
-		
-		for (final FormProperty property : formData.getFormProperties()) {			
-			mainLayout.addComponent(new TextField() {{ setValue(property.getValue()); setCaption(property.getName()); setId(property.getId()); setWidth("300px"); }}, "top:" + i + "px;left:100.0px;");
-			i=i +50;
-		}
 
+	
+	private int generateForm(List<FormProperty> formProperties){
+		int i=100;
+		String fieldValue;
+	for (final FormProperty property : formProperties) {	
+		
+		if (property.getValue()==null) {
+			fieldValue = "";
+		}else{
+			fieldValue = property.getValue();
+		}
+		
+		FormType bla = property.getType();
+		
+		
+		
+		if (property.getType()!=null && property.getType() instanceof BooleanFormType ){
+			
+						
+			mainLayout.addComponent(new CheckBox() {{ setValue(Boolean.valueOf(property.getValue())); setCaption(property.getName()); setId(property.getId());  }}, "top:" + i + "px;left:100.0px;");
+			
+			
+		} else {
+		
+			final String finalFieldValue = fieldValue;
+			mainLayout.addComponent(new TextField() {{ setValue(finalFieldValue); setCaption(property.getName()); setId(property.getId()); setWidth("300px"); }}, "top:" + i + "px;left:100.0px;");
+		
+		}
+		i=i +50;
+	}
+		return i;
+		
+	}
+	
+	
+	protected void populateStartProcessFormFields(StartFormData formData) {
+		
+		int i = generateForm(formData.getFormProperties());
 		addButtons(i);
 		
 	}
 	
 	protected void populateInProcessFormFields(TaskFormData form) {
-		int i=100;
-	
-	for (final FormProperty property : form.getFormProperties()) {			
-		mainLayout.addComponent(new TextField() {{ setValue(property.getValue()); setCaption(property.getName()); setId(property.getId()); setWidth("300px"); }}, "top:" + i + "px;left:100.0px;");
-		i=i +50;
-	}
+		
+	int i = generateForm(form.getFormProperties());
 	addCommentField(i);
 	i=i +200;
 	addButtons(i);
 	
-}
+	}
 	
 	
 	private void addButtons(int i){

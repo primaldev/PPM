@@ -140,7 +140,7 @@ public class ProcessEngineServletContextListener implements
 		Deployment res = repositoryService
 				.createDeployment()
 				.addClasspathResource(
-						"org/primaldev/ppm/bpmn/QuickProcess.bpmn")
+						"org/primaldev/ppm/bpmn/PackageProcess.bpmn")
 				.deploy();
 		 repositoryService.addCandidateStarterGroup(ProcessUtil.getProcessDefinitionByDeploymentId(res.getId()).getId(), "users");
 	}
